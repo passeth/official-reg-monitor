@@ -76,7 +76,7 @@ Today-run example for the EU CosIng Annex CSV sources:
 official-reg-monitor fetch --force
 official-reg-monitor normalize
 official-reg-monitor normalize --source EU_COSING_ANNEX_VI
-official-reg-monitor export-coching --out artifacts
+official-reg-monitor export-screening --out artifacts
 ```
 
 The parser layer is intentionally source-specific. Sites do not expose identical tables:
@@ -93,12 +93,12 @@ Current normalization support:
 - `jp_mhlw_pdf`: records a PDF parser run as skipped until PDF table extraction is enabled.
 - Other parsers: preserve provenance and record a structured `skipped` parser run.
 
-## COCHING Screening Export
+## Screening Export
 
-After `fetch` and `normalize`, export EU Annex rows in the COCHING screening artifact shape:
+After `fetch` and `normalize`, export EU Annex rows in the screening artifact shape:
 
 ```bash
-official-reg-monitor export-coching --out artifacts
+official-reg-monitor export-screening --out artifacts
 ```
 
 This writes:
@@ -106,7 +106,7 @@ This writes:
 - `artifacts/eu_cosing_regulations.csv`
 - `artifacts/eu_cosing_regulations.json`
 
-The export preserves the prior COCHING column contract: `country_code`, `source_code`, `source_name`, `annex`, `status`, `entry_number`, `chemical_name`, `inci_name`, `cas_number`, `ec_number`, `product_type`, `max_concentration`, `warnings`, `other_restrictions`, `cmr`, `update_date`, and `raw_url`. `raw_url` points to the official EC export endpoint used for the snapshot.
+The export preserves the screening column contract: `country_code`, `source_code`, `source_name`, `annex`, `status`, `entry_number`, `chemical_name`, `inci_name`, `cas_number`, `ec_number`, `product_type`, `max_concentration`, `warnings`, `other_restrictions`, `cmr`, `update_date`, and `raw_url`. `raw_url` points to the official EC export endpoint used for the snapshot.
 
 ## Schedule On macOS
 

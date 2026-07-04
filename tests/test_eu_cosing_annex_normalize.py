@@ -218,14 +218,14 @@ class EuCosingAnnexNormalizeTest(unittest.TestCase):
             self.assertEqual(row["warning_label"], "Avoid inhalation, children under 3 years")
             conn.close()
 
-    def test_cli_export_coching_writes_regulation_csv_and_json(self):
+    def test_cli_export_screening_writes_regulation_csv_and_json(self):
         with tempfile.TemporaryDirectory() as tmp:
             tmp_path = Path(tmp)
             source_file = tmp_path / "annex-vi-export-csv"
             source_file.write_text(annex_vi_csv(), encoding="utf-8")
             registry_path = write_registry(tmp_path, source_file)
             db_path = tmp_path / "monitoring.sqlite"
-            out_path = tmp_path / "coching"
+            out_path = tmp_path / "screening"
             fetch = run_cli(
                 "fetch",
                 "--registry",
@@ -251,7 +251,7 @@ class EuCosingAnnexNormalizeTest(unittest.TestCase):
                 cwd=tmp_path,
             )
             export = run_cli(
-                "export-coching",
+                "export-screening",
                 "--db",
                 str(db_path),
                 "--out",

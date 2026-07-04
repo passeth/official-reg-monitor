@@ -10,7 +10,7 @@ from typing import Any
 from .timeutil import utc_now
 
 
-COCHING_REGULATION_FIELDS = [
+SCREENING_REGULATION_FIELDS = [
     "country_code",
     "source_code",
     "source_name",
@@ -101,10 +101,10 @@ def eu_cosing_regulation_rows(conn: sqlite3.Connection) -> list[dict[str, str | 
           ri.reference_no
         """
     ).fetchall()
-    return [coching_row(row) for row in rows]
+    return [screening_row(row) for row in rows]
 
 
-def coching_row(row: sqlite3.Row) -> dict[str, str | None]:
+def screening_row(row: sqlite3.Row) -> dict[str, str | None]:
     cmr = note_value(row["note_raw"], "CMR")
     update_date = note_value(row["note_raw"], "Update Date")
     product_type = combined_product_type(row["product_scope"], row["body_part_scope"])
@@ -132,7 +132,7 @@ def coching_row(row: sqlite3.Row) -> dict[str, str | None]:
 
 def write_regulations_csv(path: Path, rows: list[dict[str, str | None]]) -> None:
     with path.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=COCHING_REGULATION_FIELDS)
+        writer = csv.DictWriter(f, fieldnames=SCREENING_REGULATION_FIELDS)
         writer.writeheader()
         writer.writerows(rows)
 
