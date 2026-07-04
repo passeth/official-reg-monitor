@@ -18,11 +18,11 @@
       "jurisdiction": "EU",
       "name": "EU CosIng Annex II prohibited substances",
       "official_owner": "European Commission",
-      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/II",
-      "kind": "html_table",
+      "url": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/II/export-csv",
+      "kind": "csv_export",
       "cadence": "daily",
       "parser": "eu_cosing_annex",
-      "capture_assets": true,
+      "capture_assets": false,
       "annex": "II"
     },
     {
@@ -30,11 +30,11 @@
       "jurisdiction": "EU",
       "name": "EU CosIng Annex III restricted substances",
       "official_owner": "European Commission",
-      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/III",
-      "kind": "html_table",
+      "url": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/III/export-csv",
+      "kind": "csv_export",
       "cadence": "daily",
       "parser": "eu_cosing_annex",
-      "capture_assets": true,
+      "capture_assets": false,
       "annex": "III"
     },
     {
@@ -42,11 +42,11 @@
       "jurisdiction": "EU",
       "name": "EU CosIng Annex IV colorants",
       "official_owner": "European Commission",
-      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/IV",
-      "kind": "html_table",
+      "url": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/IV/export-csv",
+      "kind": "csv_export",
       "cadence": "daily",
       "parser": "eu_cosing_annex",
-      "capture_assets": true,
+      "capture_assets": false,
       "annex": "IV"
     },
     {
@@ -54,11 +54,11 @@
       "jurisdiction": "EU",
       "name": "EU CosIng Annex V preservatives",
       "official_owner": "European Commission",
-      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/V",
-      "kind": "html_table",
+      "url": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/V/export-csv",
+      "kind": "csv_export",
       "cadence": "daily",
       "parser": "eu_cosing_annex",
-      "capture_assets": true,
+      "capture_assets": false,
       "annex": "V"
     },
     {
@@ -66,11 +66,11 @@
       "jurisdiction": "EU",
       "name": "EU CosIng Annex VI UV filters",
       "official_owner": "European Commission",
-      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/VI",
-      "kind": "html_table",
+      "url": "https://api.tech.ec.europa.eu/cosing20/1.0/api/annexes/VI/export-csv",
+      "kind": "csv_export",
       "cadence": "daily",
       "parser": "eu_cosing_annex",
-      "capture_assets": true,
+      "capture_assets": false,
       "annex": "VI"
     },
     {

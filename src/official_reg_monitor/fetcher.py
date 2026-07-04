@@ -27,6 +27,8 @@ def safe_ext(content_type: str | None, url: str) -> str:
         return ".xml"
     if "csv" in lowered or url_lower.endswith(".csv"):
         return ".csv"
+    if url_lower.rstrip("/").endswith("export-csv"):
+        return ".csv"
     if "excel" in lowered or url_lower.endswith((".xls", ".xlsx")):
         return ".xlsx"
     if "javascript" in lowered or url_lower.endswith(".js"):

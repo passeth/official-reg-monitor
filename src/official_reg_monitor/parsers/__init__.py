@@ -4,10 +4,13 @@ from .models import ParseResult, RegulatoryItem
 
 
 def get_parser(name: str):
+    from .eu_cosing_annex import EuCosingAnnexParser
     from .generic import GenericParser
     from .jp_mhlw_pdf import JpMhlwPdfParser
     from .us_ecfr_xml import UsEcfrXmlParser
 
+    if name == "eu_cosing_annex":
+        return EuCosingAnnexParser()
     if name == "us_ecfr":
         return UsEcfrXmlParser()
     if name == "jp_mhlw_pdf":
