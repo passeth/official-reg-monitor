@@ -79,7 +79,7 @@ The parser layer is intentionally source-specific. Sites do not expose identical
 
 Current normalization support:
 
-- `us_ecfr`: verifies the XML can be read and records a parser run.
+- `us_ecfr`: extracts section-level normalized rows from GPO bulk XML for Title 21 cosmetic parts `700`, `701`, `710`, `720`, `740` and color-additive parts `70`, `71`, `73`, `74`, `80`, `81`, `82`. The rows are written to `regulatory_sources`, `source_versions`, `regulatory_items`, and `parser_runs`.
 - `jp_mhlw_pdf`: records a PDF parser run as skipped until PDF table extraction is enabled.
 - Other parsers: preserve provenance and record a structured `skipped` parser run.
 
@@ -135,6 +135,6 @@ See [docs/distribution.md](docs/distribution.md).
 
 ## Important Boundary
 
-Running `fetch` does not mean every source has been normalized into ingredient-level rows. It means the official source has been captured, hashed, and versioned. Running `normalize` records parser runs and only inserts normalized facts for parsers that have explicit source support.
+Running `fetch` does not mean every source has been normalized into ingredient-level rows. It means the official source has been captured, hashed, and versioned. Running `normalize` records parser runs and only inserts normalized facts for parsers that have explicit source support. US eCFR support is currently section-level; ingredient-level extraction and matching are later parser layers.
 
 See [docs/source-model.md](docs/source-model.md).
