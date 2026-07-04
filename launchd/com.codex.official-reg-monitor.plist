@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.codex.official-reg-monitor</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>-m</string>
+    <string>official_reg_monitor.cli</string>
+    <string>fetch</string>
+    <string>--db</string>
+    <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/monitoring.sqlite</string>
+    <string>--out</string>
+    <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/snapshots</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>4</integer>
+    <key>Minute</key>
+    <integer>20</integer>
+  </dict>
+  <key>WorkingDirectory</key>
+  <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PYTHONPATH</key>
+    <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/src</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/logs/monitor.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/logs/monitor.err.log</string>
+</dict>
+</plist>

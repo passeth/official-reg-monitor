@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "created_at": "2026-07-04",
+  "sources": [
+    {
+      "source_id": "KR_MFDS_COSMETIC_SAFETY_STANDARD",
+      "jurisdiction": "KR",
+      "name": "Korea cosmetic safety standards regulation",
+      "official_owner": "MFDS / Korea Law Information Center",
+      "url": "https://www.law.go.kr/LSW/admRulLsInfoP.do?admRulSeq=2100000244524",
+      "kind": "html_law",
+      "cadence": "daily",
+      "parser": "kr_mfds_law",
+      "notes": "Primary Korean cosmetic safety standard landing page. Parser should extract annexes for prohibited, restricted, preservatives, UV filters, colorants where applicable."
+    },
+    {
+      "source_id": "EU_COSING_ANNEX_II",
+      "jurisdiction": "EU",
+      "name": "EU CosIng Annex II prohibited substances",
+      "official_owner": "European Commission",
+      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/II",
+      "kind": "html_table",
+      "cadence": "daily",
+      "parser": "eu_cosing_annex",
+      "capture_assets": true,
+      "annex": "II"
+    },
+    {
+      "source_id": "EU_COSING_ANNEX_III",
+      "jurisdiction": "EU",
+      "name": "EU CosIng Annex III restricted substances",
+      "official_owner": "European Commission",
+      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/III",
+      "kind": "html_table",
+      "cadence": "daily",
+      "parser": "eu_cosing_annex",
+      "capture_assets": true,
+      "annex": "III"
+    },
+    {
+      "source_id": "EU_COSING_ANNEX_IV",
+      "jurisdiction": "EU",
+      "name": "EU CosIng Annex IV colorants",
+      "official_owner": "European Commission",
+      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/IV",
+      "kind": "html_table",
+      "cadence": "daily",
+      "parser": "eu_cosing_annex",
+      "capture_assets": true,
+      "annex": "IV"
+    },
+    {
+      "source_id": "EU_COSING_ANNEX_V",
+      "jurisdiction": "EU",
+      "name": "EU CosIng Annex V preservatives",
+      "official_owner": "European Commission",
+      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/V",
+      "kind": "html_table",
+      "cadence": "daily",
+      "parser": "eu_cosing_annex",
+      "capture_assets": true,
+      "annex": "V"
+    },
+    {
+      "source_id": "EU_COSING_ANNEX_VI",
+      "jurisdiction": "EU",
+      "name": "EU CosIng Annex VI UV filters",
+      "official_owner": "European Commission",
+      "url": "https://ec.europa.eu/growth/tools-databases/cosing/reference/annexes/list/VI",
+      "kind": "html_table",
+      "cadence": "daily",
+      "parser": "eu_cosing_annex",
+      "capture_assets": true,
+      "annex": "VI"
+    },
+    {
+      "source_id": "US_ECFR_TITLE21_COSMETICS",
+      "jurisdiction": "US",
+      "name": "eCFR Title 21 bulk XML",
+      "official_owner": "U.S. Government Publishing Office / eCFR",
+      "url": "https://www.govinfo.gov/bulkdata/ECFR/title-21/ECFR-title21.xml",
+      "kind": "xml_bulk",
+      "cadence": "daily",
+      "parser": "us_ecfr",
+      "notes": "Bulk XML avoids anti-scraping HTML interstitials. Parser should extract Title 21 Parts 700, 701, 710, 720, 740 and relevant color additive parts."
+    },
+    {
+      "source_id": "JP_MHLW_STANDARDS_FOR_COSMETICS",
+      "jurisdiction": "JP",
+      "name": "Japan Standards for Cosmetics",
+      "official_owner": "MHLW",
+      "url": "https://www.mhlw.go.jp/content/001257665.pdf",
+      "kind": "pdf",
+      "cadence": "weekly",
+      "parser": "jp_mhlw_pdf"
+    },
+    {
+      "source_id": "CN_NMPA_COSMETIC_INGREDIENTS",
+      "jurisdiction": "CN",
+      "name": "China NMPA cosmetic ingredient notices and IECIC references",
+      "official_owner": "NMPA",
+      "url": "https://english.nmpa.gov.cn/",
+      "kind": "html_landing",
+      "cadence": "weekly",
+      "parser": "cn_nmpa",
+      "notes": "Registry should be expanded with stable official download URLs for IECIC and Safety Technical Specification documents when available."
+    },
+    {
+      "source_id": "ASEAN_COSMETIC_DIRECTIVE",
+      "jurisdiction": "ASEAN",
+      "name": "ASEAN Cosmetic Directive annexes",
+      "official_owner": "ASEAN / HSA mirror",
+      "url": "https://www.hsa.gov.sg/cosmetic-products/asean-cosmetic-directive/",
+      "kind": "html_landing_with_pdf_links",
+      "cadence": "weekly",
+      "parser": "asean_acd",
+      "capture_assets": true,
+      "notes": "Landing page links to Annex II, III, IV, VI, VII and appendices."
+    },
+    {
+      "source_id": "RU_EAEU_TR_CU_009_2011",
+      "jurisdiction": "RU_EAEU",
+      "name": "EAEU TR CU 009/2011 perfumery and cosmetic products",
+      "official_owner": "Eurasian Economic Commission",
+      "url": "https://eec.eaeunion.org/",
+      "kind": "html_landing",
+      "cadence": "weekly",
+      "parser": "ru_eaeu",
+      "notes": "Registry should be expanded with the exact current TR CU 009/2011 document URL and annex files."
+    }
+  ]
+}
