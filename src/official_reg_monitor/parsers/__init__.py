@@ -1,14 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-
-
-@dataclass
-class ParseResult:
-    status: str
-    records_parsed: int = 0
-    records_inserted: int = 0
-    warnings: list[str] = field(default_factory=list)
+from .models import ParseResult, RegulatoryItem
 
 
 def get_parser(name: str):
@@ -21,3 +13,6 @@ def get_parser(name: str):
     if name == "jp_mhlw_pdf":
         return JpMhlwPdfParser()
     return GenericParser(name)
+
+
+__all__ = ["ParseResult", "RegulatoryItem", "get_parser"]
