@@ -58,6 +58,12 @@ Check Python, SQLite, registry, local DB, git, and GitHub CLI readiness:
 official-reg-monitor doctor
 ```
 
+Require GitHub CLI authentication before publishing:
+
+```bash
+official-reg-monitor doctor --require-gh
+```
+
 ## Normalize
 
 ```bash
@@ -102,6 +108,13 @@ make test
 
 ```bash
 python3 -m pip wheel . --no-deps --no-build-isolation -w dist
+```
+
+Build release bundle, source archive, wheel, and checksums:
+
+```bash
+make release
+make verify-release
 ```
 
 ## Git Distribution

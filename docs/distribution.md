@@ -14,6 +14,15 @@ git commit -m "Initial official regulation monitor"
 python3 -m pip wheel . --no-deps --no-build-isolation -w dist
 ```
 
+## Build Release Files
+
+```bash
+make release
+make verify-release
+```
+
+This writes a git bundle, source archive, wheel, and `SHA256SUMS` to `release/` by default.
+
 The generated wheel can be installed with:
 
 ```bash
@@ -36,6 +45,7 @@ Option A, use the helper:
 
 ```bash
 gh auth login -h github.com
+official-reg-monitor doctor --require-gh
 ./publish_github.sh <owner/repo> private
 ```
 

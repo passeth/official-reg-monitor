@@ -11,3 +11,4 @@
 - Added macOS launchd schedule template.
 - Added smoke tests and GitHub Actions CI.
 - Added `doctor` command and GitHub publish helper.
+- Added release build and verification scripts.

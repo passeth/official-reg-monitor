@@ -34,6 +34,14 @@ class CliSmokeTest(unittest.TestCase):
         self.assertIn("python", payload)
         self.assertIn("registry", payload)
         self.assertTrue(payload["registry"]["ok"])
+        self.assertTrue(payload["collector_ok"])
+        self.assertIn("publish_ready", payload)
+
+    def test_doctor_require_gh_reports_publish_readiness(self):
+        result = run_cli("doctor", "--require-gh")
+        self.assertIn(result.returncode, {0, 1})
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["ok"], payload["publish_ready"])
 
     def test_fetch_file_source(self):
         import tempfile

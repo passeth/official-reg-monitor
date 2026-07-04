@@ -76,7 +76,7 @@ def status_cmd(args: argparse.Namespace) -> int:
 
 
 def doctor_cmd(args: argparse.Namespace) -> int:
-    result = doctor(args.registry, args.db)
+    result = doctor(args.registry, args.db, require_gh=args.require_gh)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0 if result["ok"] else 1
 
@@ -105,6 +105,7 @@ def build_parser() -> argparse.ArgumentParser:
     doctor_parser = subparsers.add_parser("doctor", help="Check local environment and project readiness")
     doctor_parser.add_argument("--registry", default=None, help="Registry JSON path. Defaults to the bundled registry.")
     doctor_parser.add_argument("--db", default="monitoring.sqlite")
+    doctor_parser.add_argument("--require-gh", action="store_true", help="Fail unless GitHub CLI authentication is ready for publishing")
     doctor_parser.set_defaults(func=doctor_cmd)
 
     return parser

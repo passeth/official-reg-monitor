@@ -24,7 +24,7 @@ def command_status(command: list[str]) -> dict[str, Any]:
     }
 
 
-def doctor(registry_path: str | None, db_path: str) -> dict[str, Any]:
+def doctor(registry_path: str | None, db_path: str, require_gh: bool = False) -> dict[str, Any]:
     checks: dict[str, Any] = {
         "python": {
             "version": sys.version.split()[0],
@@ -56,6 +56,7 @@ def doctor(registry_path: str | None, db_path: str) -> dict[str, Any]:
 
     checks["git"] = command_status(["git", "--version"])
     checks["gh"] = command_status(["gh", "auth", "status"])
-    checks["ok"] = checks["registry"]["ok"] and checks["database"]["ok"] and checks["git"]["available"]
+    checks["collector_ok"] = checks["registry"]["ok"] and checks["database"]["ok"] and checks["git"]["available"]
+    checks["publish_ready"] = checks["collector_ok"] and checks["gh"].get("returncode") == 0
+    checks["ok"] = checks["publish_ready"] if require_gh else checks["collector_ok"]
     return checks
-
