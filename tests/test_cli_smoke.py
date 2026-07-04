@@ -27,6 +27,14 @@ class CliSmokeTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0)
         self.assertIn("official-reg-monitor", result.stdout)
 
+    def test_doctor(self):
+        result = run_cli("doctor")
+        self.assertIn(result.returncode, {0, 1})
+        payload = json.loads(result.stdout)
+        self.assertIn("python", payload)
+        self.assertIn("registry", payload)
+        self.assertTrue(payload["registry"]["ok"])
+
     def test_fetch_file_source(self):
         import tempfile
 

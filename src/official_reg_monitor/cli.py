@@ -7,6 +7,7 @@ import sys
 from . import __version__
 from .config import read_registry, select_sources
 from .db import connect, upsert_sources
+from .doctor import doctor
 from .fetcher import monitor_source
 from .normalize import latest_snapshots, normalize_snapshot
 
@@ -74,6 +75,12 @@ def status_cmd(args: argparse.Namespace) -> int:
     return 0
 
 
+def doctor_cmd(args: argparse.Namespace) -> int:
+    result = doctor(args.registry, args.db)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0 if result["ok"] else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="official-reg-monitor")
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
@@ -94,6 +101,11 @@ def build_parser() -> argparse.ArgumentParser:
     status.add_argument("--registry", default=None, help="Registry JSON path. Defaults to the bundled registry.")
     status.add_argument("--db", default="monitoring.sqlite")
     status.set_defaults(func=status_cmd)
+
+    doctor_parser = subparsers.add_parser("doctor", help="Check local environment and project readiness")
+    doctor_parser.add_argument("--registry", default=None, help="Registry JSON path. Defaults to the bundled registry.")
+    doctor_parser.add_argument("--db", default="monitoring.sqlite")
+    doctor_parser.set_defaults(func=doctor_cmd)
 
     return parser
 

@@ -32,6 +32,15 @@ The installer renders `launchd/com.codex.official-reg-monitor.plist` with the cu
 
 ## Publish To GitHub
 
+Option A, use the helper:
+
+```bash
+gh auth login -h github.com
+./publish_github.sh <owner/repo> private
+```
+
+Option B, manual remote:
+
 ```bash
 git remote add origin git@github.com:<owner>/official-reg-monitor.git
 git branch -M main

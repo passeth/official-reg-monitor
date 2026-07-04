@@ -50,6 +50,14 @@ python3 monitor.py --force
 official-reg-monitor status
 ```
 
+## Doctor
+
+Check Python, SQLite, registry, local DB, git, and GitHub CLI readiness:
+
+```bash
+official-reg-monitor doctor
+```
+
 ## Normalize
 
 ```bash
@@ -102,6 +110,12 @@ python3 -m pip wheel . --no-deps --no-build-isolation -w dist
 git init
 git add .
 git commit -m "Initial official regulation monitor"
+```
+
+Publish to GitHub after `gh auth login`:
+
+```bash
+./publish_github.sh <owner/repo> private
 ```
 
 See [docs/distribution.md](docs/distribution.md).

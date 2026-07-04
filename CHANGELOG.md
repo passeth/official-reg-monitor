@@ -10,4 +10,4 @@
 - Added parser scaffold with US eCFR XML part detection and JP PDF provenance handling.
 - Added macOS launchd schedule template.
 - Added smoke tests and GitHub Actions CI.
-
+- Added `doctor` command and GitHub publish helper.
