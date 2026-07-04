@@ -100,7 +100,7 @@ def monitor_source(
     out_path = Path(out_dir)
     if respect_cadence and not force:
         last_success = db.latest_success_at(conn, source["source_id"])
-        if not due_for_fetch(source, last_success, dt.datetime.now(dt.UTC)):
+        if not due_for_fetch(source, last_success, dt.datetime.now(dt.timezone.utc)):
             return {
                 "source_id": source["source_id"],
                 "ok": True,
