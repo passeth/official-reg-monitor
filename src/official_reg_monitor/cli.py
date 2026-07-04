@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from pathlib import Path
 
 from . import __version__
 from .config import read_registry, select_sources
@@ -46,12 +45,11 @@ def normalize_cmd(args: argparse.Namespace) -> int:
     upsert_sources(conn, registry)
     snapshots = latest_snapshots(conn, args.source)
     results = []
-    root = Path.cwd()
     for snapshot in snapshots:
         source = source_map.get(snapshot["source_id"])
         if not source:
             continue
-        results.append(normalize_snapshot(conn, source, snapshot, root))
+        results.append(normalize_snapshot(conn, source, snapshot))
     print(json.dumps({"results": results}, ensure_ascii=False, indent=2))
     return 0 if all(result["ok"] for result in results) else 1
 

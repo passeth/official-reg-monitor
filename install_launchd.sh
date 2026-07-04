@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLIST_NAME="com.codex.official-reg-monitor.plist"
 SOURCE_PLIST="$ROOT/launchd/$PLIST_NAME"
 TARGET_PLIST="$HOME/Library/LaunchAgents/$PLIST_NAME"
 
 mkdir -p "$ROOT/logs" "$HOME/Library/LaunchAgents"
-cp "$SOURCE_PLIST" "$TARGET_PLIST"
+sed "s#__ROOT__#$ROOT#g" "$SOURCE_PLIST" > "$TARGET_PLIST"
 cd "$ROOT"
 launchctl unload "$TARGET_PLIST" >/dev/null 2>&1 || true
 launchctl load "$TARGET_PLIST"

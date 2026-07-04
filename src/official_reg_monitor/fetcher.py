@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import datetime as dt
 import hashlib
-import os
 import sqlite3
 import urllib.error
 import urllib.request
@@ -51,6 +50,7 @@ def due_for_fetch(source: dict[str, Any], last_success_at: dt.datetime | None, n
 
 
 def fetch_url(url: str, out_dir: Path, source_id: str) -> dict[str, Any]:
+    out_dir = out_dir.expanduser().resolve()
     req = urllib.request.Request(
         url,
         headers={
@@ -82,7 +82,7 @@ def fetch_url(url: str, out_dir: Path, source_id: str) -> dict[str, Any]:
         {
             "sha256": sha,
             "byte_size": len(body),
-            "path": os.path.relpath(path, Path.cwd()),
+            "path": str(path),
         }
     )
     return result
@@ -143,4 +143,3 @@ def monitor_source(
             "changed": False,
             "error": str(exc),
         }
-

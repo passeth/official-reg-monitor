@@ -75,6 +75,8 @@ Current normalization support:
 ./install_launchd.sh
 ```
 
+The installer uses the current checkout path, so it works after cloning to any local directory.
+
 Logs:
 
 ```text

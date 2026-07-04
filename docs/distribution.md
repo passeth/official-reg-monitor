@@ -20,6 +20,16 @@ The generated wheel can be installed with:
 python3 -m pip install dist/official_reg_monitor-0.1.0-py3-none-any.whl
 ```
 
+## macOS Schedule
+
+From a cloned checkout:
+
+```bash
+./install_launchd.sh
+```
+
+The installer renders `launchd/com.codex.official-reg-monitor.plist` with the current checkout path, then installs it into `~/Library/LaunchAgents`.
+
 ## Publish To GitHub
 
 ```bash
@@ -35,4 +45,3 @@ Use semantic versioning:
 - Patch: parser bug fixes, registry URL correction.
 - Minor: new source parser or normalized table support.
 - Major: schema contract changes.
-

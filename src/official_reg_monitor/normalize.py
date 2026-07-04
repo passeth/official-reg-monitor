@@ -33,7 +33,7 @@ def latest_snapshots(conn: sqlite3.Connection, source_id: str | None = None) -> 
     )
 
 
-def normalize_snapshot(conn: sqlite3.Connection, source: dict[str, Any], snapshot: sqlite3.Row, root: Path) -> dict[str, Any]:
+def normalize_snapshot(conn: sqlite3.Connection, source: dict[str, Any], snapshot: sqlite3.Row) -> dict[str, Any]:
     parser_name = source.get("parser") or "generic"
     parser = get_parser(parser_name)
     started_at = utc_now()
@@ -48,7 +48,7 @@ def normalize_snapshot(conn: sqlite3.Connection, source: dict[str, Any], snapsho
     )
     run_id = int(cursor.lastrowid)
     try:
-        records = parser.parse(root / snapshot["path"], source, snapshot)
+        records = parser.parse(Path(snapshot["path"]), source, snapshot)
         conn.execute(
             """
             UPDATE parser_runs
@@ -89,4 +89,3 @@ def normalize_snapshot(conn: sqlite3.Connection, source: dict[str, Any], snapsho
             "status": "error",
             "error": str(exc),
         }
-

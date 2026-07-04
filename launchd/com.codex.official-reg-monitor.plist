@@ -12,9 +12,9 @@
     <string>official_reg_monitor.cli</string>
     <string>fetch</string>
     <string>--db</string>
-    <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/monitoring.sqlite</string>
+    <string>__ROOT__/monitoring.sqlite</string>
     <string>--out</string>
-    <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/snapshots</string>
+    <string>__ROOT__/snapshots</string>
   </array>
   <key>StartCalendarInterval</key>
   <dict>
@@ -24,15 +24,15 @@
     <integer>20</integer>
   </dict>
   <key>WorkingDirectory</key>
-  <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline</string>
+  <string>__ROOT__</string>
   <key>EnvironmentVariables</key>
   <dict>
     <key>PYTHONPATH</key>
-    <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/src</string>
+    <string>__ROOT__/src</string>
   </dict>
   <key>StandardOutPath</key>
-  <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/logs/monitor.log</string>
+  <string>__ROOT__/logs/monitor.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/passeth/Documents/Codex/2026-07-04/new-chat/outputs/official-reg-monitoring-pipeline/logs/monitor.err.log</string>
+  <string>__ROOT__/logs/monitor.err.log</string>
 </dict>
 </plist>

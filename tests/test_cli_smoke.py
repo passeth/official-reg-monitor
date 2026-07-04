@@ -68,6 +68,19 @@ class CliSmokeTest(unittest.TestCase):
             payload = json.loads(result.stdout)
             self.assertTrue(payload["results"][0]["ok"])
             self.assertTrue(payload["results"][0]["changed"])
+            self.assertTrue(Path(payload["results"][0]["path"]).is_absolute())
+
+            normalize = run_cli(
+                "normalize",
+                "--registry",
+                str(registry_path),
+                "--db",
+                str(tmp_path / "monitoring.sqlite"),
+                cwd=ROOT,
+            )
+            self.assertEqual(normalize.returncode, 0, normalize.stderr + normalize.stdout)
+            normalize_payload = json.loads(normalize.stdout)
+            self.assertEqual(normalize_payload["results"][0]["status"], "skipped")
 
 
 if __name__ == "__main__":
