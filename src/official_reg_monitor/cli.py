@@ -6,6 +6,7 @@ import sys
 
 from . import __version__
 from .config import read_registry, select_sources
+from .coching_export import export_eu_cosing_regulations
 from .db import connect, upsert_sources
 from .doctor import doctor
 from .fetcher import monitor_source
@@ -81,6 +82,13 @@ def doctor_cmd(args: argparse.Namespace) -> int:
     return 0 if result["ok"] else 1
 
 
+def export_coching_cmd(args: argparse.Namespace) -> int:
+    conn = connect(args.db)
+    result = export_eu_cosing_regulations(conn, args.out, prefix=args.prefix)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="official-reg-monitor")
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
@@ -107,6 +115,12 @@ def build_parser() -> argparse.ArgumentParser:
     doctor_parser.add_argument("--db", default="monitoring.sqlite")
     doctor_parser.add_argument("--require-gh", action="store_true", help="Fail unless GitHub CLI authentication is ready for publishing")
     doctor_parser.set_defaults(func=doctor_cmd)
+
+    export_coching = subparsers.add_parser("export-coching", help="Export normalized rows in COCHING screening artifact shape")
+    export_coching.add_argument("--db", default="monitoring.sqlite")
+    export_coching.add_argument("--out", default="artifacts")
+    export_coching.add_argument("--prefix", default="eu_cosing_regulations")
+    export_coching.set_defaults(func=export_coching_cmd)
 
     return parser
 

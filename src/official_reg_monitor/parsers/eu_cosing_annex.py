@@ -20,7 +20,7 @@ ANNEX_STATUS = {
 
 
 class EuCosingAnnexParser:
-    version = "0.1.0"
+    version = "0.2.0"
 
     def parse(self, path: Path, source: dict[str, Any], snapshot) -> ParseResult:
         warnings: list[str] = []
@@ -94,6 +94,10 @@ def classify_columns(header: list[str]) -> dict[str, int]:
             columns["warning_label"] = index
         elif "note_raw" not in columns and is_note_header(cell):
             columns["note_raw"] = index
+        elif "cmr" not in columns and is_cmr_header(cell):
+            columns["cmr"] = index
+        elif "update_date" not in columns and is_update_date_header(cell):
+            columns["update_date"] = index
         elif "product_body_scope" not in columns and is_product_body_header(cell):
             columns["product_body_scope"] = index
         elif "product_scope" not in columns and is_product_scope_header(cell):
@@ -132,7 +136,11 @@ def item_from_row(
     max_concentration = value_at(row, columns.get("max_concentration_raw"))
     conditions = value_at(row, columns.get("conditions_raw"))
     warning = value_at(row, columns.get("warning_label"))
-    note = value_at(row, columns.get("note_raw"))
+    note = build_note_raw(
+        value_at(row, columns.get("note_raw")),
+        value_at(row, columns.get("cmr")),
+        value_at(row, columns.get("update_date")),
+    )
     row_hash = official_row_hash(
         source["source_id"],
         annex,
@@ -244,6 +252,25 @@ def is_conditions_header(value: str) -> bool:
 
 def is_note_header(value: str) -> bool:
     return value in {"note", "notes", "remarks", "remark"}
+
+
+def is_cmr_header(value: str) -> bool:
+    return value == "cmr"
+
+
+def is_update_date_header(value: str) -> bool:
+    return value == "update date" or value == "updated date"
+
+
+def build_note_raw(note: str | None, cmr: str | None, update_date: str | None) -> str | None:
+    parts = []
+    if note:
+        parts.append(note)
+    if cmr:
+        parts.append(f"CMR: {cmr}")
+    if update_date:
+        parts.append(f"Update Date: {update_date}")
+    return "\n".join(parts) or None
 
 
 def split_product_body_scope(value: str) -> tuple[str | None, str | None]:

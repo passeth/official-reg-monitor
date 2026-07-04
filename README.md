@@ -76,6 +76,7 @@ Today-run example for the EU CosIng Annex CSV sources:
 official-reg-monitor fetch --force
 official-reg-monitor normalize
 official-reg-monitor normalize --source EU_COSING_ANNEX_VI
+official-reg-monitor export-coching --out artifacts
 ```
 
 The parser layer is intentionally source-specific. Sites do not expose identical tables:
@@ -91,6 +92,21 @@ Current normalization support:
 - `us_ecfr`: extracts section-level normalized rows from GPO bulk XML for Title 21 cosmetic parts `700`, `701`, `710`, `720`, `740` and color-additive parts `70`, `71`, `73`, `74`, `80`, `81`, `82`. The rows are written to `regulatory_sources`, `source_versions`, `regulatory_items`, and `parser_runs`.
 - `jp_mhlw_pdf`: records a PDF parser run as skipped until PDF table extraction is enabled.
 - Other parsers: preserve provenance and record a structured `skipped` parser run.
+
+## COCHING Screening Export
+
+After `fetch` and `normalize`, export EU Annex rows in the COCHING screening artifact shape:
+
+```bash
+official-reg-monitor export-coching --out artifacts
+```
+
+This writes:
+
+- `artifacts/eu_cosing_regulations.csv`
+- `artifacts/eu_cosing_regulations.json`
+
+The export preserves the prior COCHING column contract: `country_code`, `source_code`, `source_name`, `annex`, `status`, `entry_number`, `chemical_name`, `inci_name`, `cas_number`, `ec_number`, `product_type`, `max_concentration`, `warnings`, `other_restrictions`, `cmr`, `update_date`, and `raw_url`. `raw_url` points to the official EC export endpoint used for the snapshot.
 
 ## Schedule On macOS
 

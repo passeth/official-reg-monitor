@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import json
 import sqlite3
 import subprocess
@@ -56,11 +57,11 @@ def annex_vi_csv() -> str:
         '"LIST OF UV FILTERS ALLOWED IN COSMETIC PRODUCTS"\n'
         '"Reference number","Substance identification","Chemical name/INN/XAN","CAS Number",'
         '"EC Number","Product type, body parts","Maximum concentration in ready for use preparation",'
-        '"Other","Wording of conditions of use and warnings"\n'
+        '"Other","Wording of conditions of use and warnings","CMR","Update Date"\n'
         '"22","Titanium dioxide","Titanium dioxide","13463-67-7","236-675-5",'
         '"Sunscreen products, face and body","25 %","Not to be used in applications that may lead to exposure '
         "of the end-user's lungs by inhalation.\n"
-        'Allowed nano form under listed characteristics.","Avoid inhalation, children under 3 years"\n'
+        'Allowed nano form under listed characteristics.","Avoid inhalation, children under 3 years","","04/07/2026"\n'
     )
 
 
@@ -97,6 +98,7 @@ class EuCosingAnnexNormalizeTest(unittest.TestCase):
         self.assertIn("exposure of the end-user's lungs", item.conditions_raw)
         self.assertIn("Allowed nano form", item.conditions_raw)
         self.assertEqual(item.warning_label, "Avoid inhalation, children under 3 years")
+        self.assertEqual(item.note_raw, "Update Date: 04/07/2026")
         self.assertEqual(len(item.official_row_hash), 64)
 
     def test_annex_codes_map_to_regulatory_statuses(self):
@@ -215,6 +217,82 @@ class EuCosingAnnexNormalizeTest(unittest.TestCase):
             self.assertIn("Allowed nano form", row["conditions_raw"])
             self.assertEqual(row["warning_label"], "Avoid inhalation, children under 3 years")
             conn.close()
+
+    def test_cli_export_coching_writes_regulation_csv_and_json(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            source_file = tmp_path / "annex-vi-export-csv"
+            source_file.write_text(annex_vi_csv(), encoding="utf-8")
+            registry_path = write_registry(tmp_path, source_file)
+            db_path = tmp_path / "monitoring.sqlite"
+            out_path = tmp_path / "coching"
+            fetch = run_cli(
+                "fetch",
+                "--registry",
+                str(registry_path),
+                "--db",
+                str(db_path),
+                "--out",
+                str(tmp_path / "snapshots"),
+                "--source",
+                SOURCE_ID,
+                "--force",
+                "--no-assets",
+                cwd=tmp_path,
+            )
+            normalize = run_cli(
+                "normalize",
+                "--registry",
+                str(registry_path),
+                "--db",
+                str(db_path),
+                "--source",
+                SOURCE_ID,
+                cwd=tmp_path,
+            )
+            export = run_cli(
+                "export-coching",
+                "--db",
+                str(db_path),
+                "--out",
+                str(out_path),
+                cwd=tmp_path,
+            )
+
+            self.assertEqual(fetch.returncode, 0, fetch.stderr + fetch.stdout)
+            self.assertEqual(normalize.returncode, 0, normalize.stderr + normalize.stdout)
+            self.assertEqual(export.returncode, 0, export.stderr + export.stdout)
+            payload = json.loads(export.stdout)
+            self.assertEqual(payload["total"], 1)
+
+            csv_path = out_path / "eu_cosing_regulations.csv"
+            json_path = out_path / "eu_cosing_regulations.json"
+            self.assertTrue(csv_path.exists())
+            self.assertTrue(json_path.exists())
+            with csv_path.open(encoding="utf-8", newline="") as f:
+                rows = list(csv.DictReader(f))
+            self.assertEqual(len(rows), 1)
+            row = rows[0]
+            self.assertEqual(row["country_code"], "EU")
+            self.assertEqual(row["source_code"], "EU_CosIng")
+            self.assertEqual(row["source_name"], "EU CosIng Annex II-VI")
+            self.assertEqual(row["annex"], "VI")
+            self.assertEqual(row["status"], "allowed_uv_filter")
+            self.assertEqual(row["entry_number"], "22")
+            self.assertEqual(row["chemical_name"], "Titanium dioxide")
+            self.assertEqual(row["inci_name"], "Titanium dioxide")
+            self.assertEqual(row["cas_number"], "13463-67-7")
+            self.assertEqual(row["ec_number"], "236-675-5")
+            self.assertEqual(row["product_type"], "Sunscreen products, face and body")
+            self.assertEqual(row["max_concentration"], "25 %")
+            self.assertIn("exposure of the end-user's lungs", row["other_restrictions"])
+            self.assertEqual(row["warnings"], "Avoid inhalation, children under 3 years")
+            self.assertEqual(row["update_date"], "04/07/2026")
+            self.assertEqual(row["raw_url"], source_file.as_uri())
+
+            json_payload = json.loads(json_path.read_text(encoding="utf-8"))
+            self.assertEqual(json_payload["total"], 1)
+            self.assertEqual(json_payload["items"][0]["status"], "allowed_uv_filter")
 
 
 if __name__ == "__main__":
